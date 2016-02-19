@@ -3,14 +3,14 @@ namespace PhpSlackBot;
 
 class Bot {
 
-    private $params = array();
-    private $context = array();
-    private $wsUrl;
-    private $commands = array();
-    private $webhooks = array();
-    private $webserverPort = null;
-    private $webserverAuthentificationToken = null;
-    private $catchAllCommand = null;
+    protected $params = array();
+    protected $context = array();
+    protected $wsUrl;
+    protected $commands = array();
+    protected $webhooks = array();
+    protected $webserverPort = null;
+    protected $webserverAuthentificationToken = null;
+    protected $catchAllCommand = null;
 
     public function setToken($token) {
         $this->params = array('token' => $token);
@@ -134,7 +134,7 @@ class Bot {
         $loop->run();
     }
 
-    private function init() {
+    protected function init() {
         $url = 'https://slack.com/api/rtm.start';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url.'?'.http_build_query($this->params));
@@ -155,7 +155,7 @@ class Bot {
         $this->wsUrl = $response['url'];
     }
 
-    private function loadInternalCommands() {
+    protected function loadInternalCommands() {
         $commands = array(
                           new \PhpSlackBot\Command\PingPongCommand,
                           new \PhpSlackBot\Command\CountCommand,
@@ -169,7 +169,7 @@ class Bot {
         }
     }
 
-    private function loadInternalWebhooks() {
+    protected function loadInternalWebhooks() {
         $webhooks = array(
                           new \PhpSlackBot\Webhook\OutputWebhook,
                           );
@@ -180,7 +180,7 @@ class Bot {
         }
     }
 
-    private function getCommand($data) {
+    protected function getCommand($data) {
         if (isset($data['text'])) {
             $argsOffset = 0;
             if (strpos($data['text'], '<@'.$this->context['self']['id'].'>') === 0) {
