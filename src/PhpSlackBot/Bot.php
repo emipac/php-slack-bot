@@ -13,7 +13,7 @@ class Bot {
     protected $catchAllCommand = null;
 
     public function setToken($token) {
-        $this->params = array('token' => $token);
+        $this->params['slackapi'] = array('token' => $token);
     }
 
     public function loadCommand($command) {
@@ -49,7 +49,7 @@ class Bot {
     }
 
     public function run() {
-        if (!isset($this->params['token'])) {
+        if (!isset($this->params['slackapi']['token'])) {
             throw new \Exception('A token must be set. Please see https://my.slack.com/services/new/bot');
         }
         $this->loadInternalCommands();
@@ -137,7 +137,7 @@ class Bot {
     protected function init() {
         $url = 'https://slack.com/api/rtm.start';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url.'?'.http_build_query($this->params));
+        curl_setopt($ch, CURLOPT_URL, $url.'?'.http_build_query($this->params['slackapi']));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $body = curl_exec($ch);
         if ($body === false) {
