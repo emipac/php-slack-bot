@@ -2,10 +2,10 @@
 namespace PhpSlackBot;
 
 abstract class Base {
-    private $name;
-    private $client;
-    private $user;
-    private $context;
+    protected $name;
+    protected $client;
+    protected $user;
+    protected $context;
     abstract protected function configure();
     abstract protected function execute($message, $context);
 
