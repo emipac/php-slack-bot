@@ -119,7 +119,7 @@ class PokerPlanningCommand extends BaseCommand {
         }
     }
 
-    private function getArgs($message) {
+    public function getArgs($message) {
         $args = array();
         if (isset($message['text'])) {
             $args = array_values(array_filter(explode(' ', $message['text'])));
